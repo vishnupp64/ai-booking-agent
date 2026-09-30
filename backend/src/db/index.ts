@@ -54,11 +54,8 @@ export async function initDb() {
       },
     };
   } else {
-    console.log(`⚡ Initializing PostgreSQL (PGlite) engine at ${dataDir}...`);
-    if (!fs.existsSync(path.dirname(dataDir))) {
-      fs.mkdirSync(path.dirname(dataDir), { recursive: true });
-    }
-    const pglite = new PGlite(dataDir);
+    console.log(`⚡ Initializing lightweight in-memory PostgreSQL engine...`);
+    const pglite = new PGlite();
     dbClient = {
       query: async (sql: string, params?: any[]) => {
         const res = await pglite.query(sql, params);
