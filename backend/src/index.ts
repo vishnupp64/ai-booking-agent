@@ -20,7 +20,7 @@ app.use('/api', apiRoutes);
 
 // Serve static frontend when built
 const frontendDistPath = path.resolve(process.cwd(), 'frontend/dist');
-const altFrontendDistPath = path.resolve(__dirname, '../../frontend/dist');
+const altFrontendDistPath = path.resolve(process.cwd(), '../frontend/dist');
 const staticPath = fs.existsSync(frontendDistPath) 
   ? frontendDistPath 
   : fs.existsSync(altFrontendDistPath) 
