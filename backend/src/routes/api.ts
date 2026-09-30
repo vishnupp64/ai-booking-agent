@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import {
   getDepartments,
   getDoctors,
@@ -150,7 +150,7 @@ router.get('/bookings/search', async (req, res) => {
 });
 
 // 9. Cancel Appointment
-router.post('/bookings/cancel', async (req, res) => {
+router.post('/bookings/cancel', async (req: Request, res: Response) => {
   try {
     const { referenceCode, customerEmail } = req.body;
     const cancelled = await cancelAppointment({ referenceCode, customerEmail });
@@ -161,7 +161,7 @@ router.post('/bookings/cancel', async (req, res) => {
 });
 
 // 10. Reschedule Appointment
-router.post('/bookings/reschedule', async (req, res) => {
+router.post('/bookings/reschedule', async (req: Request, res: Response) => {
   try {
     const { referenceCode, newStartTime } = req.body;
     if (!newStartTime) {
@@ -175,7 +175,7 @@ router.post('/bookings/reschedule', async (req, res) => {
 });
 
 // 11. AI Chat tool calling endpoint
-router.post('/chat', async (req, res) => {
+router.post('/chat', async (req: Request, res: Response) => {
   try {
     const { message, history } = req.body;
     if (!message || typeof message !== 'string') {
@@ -190,7 +190,7 @@ router.post('/chat', async (req, res) => {
 });
 
 // 12. Health check
-router.get('/health', (req, res) => {
+router.get('/health', (req: Request, res: Response) => {
   res.json({
     status: 'healthy',
     system: 'LifeCare Hospital Booking Engine',
