@@ -9,7 +9,6 @@
     "seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
-    "@electric-sql/pglite": "^0.2.14",
     "@google/generative-ai": "^0.21.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
