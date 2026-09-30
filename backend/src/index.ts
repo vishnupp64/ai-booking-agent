@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import apiRoutes from './routes/api.js';
 import { initDb } from './db/index.js';
 import { seedDatabase } from './db/seed.js';
@@ -15,6 +17,24 @@ app.use(express.json());
 
 // API Routes
 app.use('/api', apiRoutes);
+
+// Serve static frontend when built
+const frontendDistPath = path.resolve(process.cwd(), 'frontend/dist');
+const altFrontendDistPath = path.resolve(__dirname, '../../frontend/dist');
+const staticPath = fs.existsSync(frontendDistPath) 
+  ? frontendDistPath 
+  : fs.existsSync(altFrontendDistPath) 
+  ? altFrontendDistPath 
+  : null;
+
+if (staticPath) {
+  console.log(`📁 Serving static frontend from: ${staticPath}`);
+  app.use(express.static(staticPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(staticPath, 'index.html'));
+  });
+}
 
 async function startServer() {
   try {
